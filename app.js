@@ -23,6 +23,7 @@ const PORT = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
+// path, middleware function/method....
 app.use("/users", users);
 
 app.use(express.static(path.join(__dirname, "public")));
