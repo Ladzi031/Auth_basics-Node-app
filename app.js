@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const passport = require("passport-jwt");
+const passport = require("passport");
 const mongoose = require("mongoose");
 const config = require("./config/database");
 
@@ -19,6 +19,8 @@ mongoose.connection.on("connected", () => {
 // port Number
 const PORT = 3000;
 
+app.use(express.static(path.join(__dirname, "public")));
+
 // Middleware...
 app.use(cors());
 app.use(bodyParser.json());
@@ -26,7 +28,9 @@ app.use(bodyParser.json());
 // path, middleware function/method....
 app.use("/users", users);
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passport")(passport);
 
 //Index Route...
 app.get("/", (req, res) => {
