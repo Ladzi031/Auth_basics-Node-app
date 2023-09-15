@@ -67,7 +67,6 @@ module.exports.comparePassword = function (password, hash, callback) {
     if (err) {
       throw new Error("failed to compare password, in the model: " + err);
     }
-
     callback(false, isMatch);
   });
 };

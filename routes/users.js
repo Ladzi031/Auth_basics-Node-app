@@ -4,7 +4,8 @@ const User = require("../models/user"); // three parts are exported in this user
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const config = require("../config/database");
-// Register...
+
+// Register endPoint...
 router.post("/register", (req, res, next) => {
   let newUser = new User({
     name: req.body.name,
@@ -22,6 +23,7 @@ router.post("/register", (req, res, next) => {
   });
 });
 
+// Authenticate endPoint...
 router.post("/authenticate", (req, res, next) => {
   const name = req.body.name;
   const password = req.body.password;
@@ -61,6 +63,7 @@ router.post("/authenticate", (req, res, next) => {
   });
 });
 
+// Profile protected endPoint...
 router.get(
   "/profile",
   passport.authenticate("jwt", { session: false }),
