@@ -1,5 +1,5 @@
 
-Learning the Basics of Node and route protection with authentication
+Learning the Basics of Node and route protection /authentication
 with popular NodeJs tools (passport.js, webtoken ...)
 
 #some of the tools learned here are:
