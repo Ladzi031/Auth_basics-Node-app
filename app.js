@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -24,13 +25,20 @@ app.use(express.static(path.join(__dirname, "public")));
 // Middleware...
 app.use(cors());
 app.use(bodyParser.json());
-
-// path, middleware function/method....
-app.use("/users", users);
+app.use(
+  session({
+    secret: config.secretKey,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
 require("./config/passport")(passport);
+
+// path, middleware function/method....
+app.use("/users", users);
 
 //Index Route...
 app.get("/", (req, res) => {
