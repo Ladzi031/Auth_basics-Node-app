@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/model/user';
 import { ValidateService } from 'src/app/services/validate.service';
+import { Notify } from 'notiflix';
+import * as Notiflix from 'notiflix';
 
 @Component({
   selector: 'app-register',
@@ -19,23 +22,25 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  onRegisterSubmit() {
-    const user = {
+  onRegisterSubmit(): boolean {
+
+    const user: User = {
       name: this.name,
       email: this.email,
       username: this.username,
       password: this.password
     }
-    const isValidRegister: boolean = this.validateService.validateRegister(user);
-    const isValidEmail: boolean = this.validateService.validateEmail(this.email);
-
-    if (isValidRegister && isValidEmail) {
-
-      //console.log("everything seems fine!");
+    // required fields...
+    if (!this.validateService.validateRegister(user)) {
+      Notify.failure("please fill in all fields");
+      return false;
     }
-    else {
-      //console.log("something is wrong!");
+    if (!this.validateService.validateEmail(user.email)) {
+      Notify.failure("the email entered is invalid!");
+      return false;
     }
+    
+    return true;
   }
 
 }
