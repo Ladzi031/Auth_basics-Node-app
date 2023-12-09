@@ -11,7 +11,7 @@ module.exports = function (passport) {
 
   passport.use(
     new JwtStrategy(options, (jwt_payload, done) => {
-      console.log("the id: " + jwt_payload._id);
+      // console.log("the id: " + jwt_payload._id);
 
       User.getUserById(jwt_payload._id, (err, user) => {
         if (err) {
@@ -25,4 +25,22 @@ module.exports = function (passport) {
       });
     })
   );
+
+  passport.serializeUser((user, done) => {
+    //console.log("in the serializer..." + user._id);
+    done(null, user._id);
+  });
+
+  passport.deserializeUser((id, done) => {
+    User.getUserById(id, (err, user) => {
+      if (err) {
+        return done(err, false);
+      }
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    });
+  });
 };

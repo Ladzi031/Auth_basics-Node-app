@@ -66,10 +66,7 @@ router.post("/authenticate", (req, res, next) => {
 });
 
 // Profile protected endPoint...
-router.get(
-  "/profile",
-  passport.authenticate("jwt", { session: false }),
-  (req, res, next) => {
+router.get("/profile",passport.authenticate("jwt", { session: true }),(req, res, next) => {
     res.json({ user: req.user });
   }
 );
