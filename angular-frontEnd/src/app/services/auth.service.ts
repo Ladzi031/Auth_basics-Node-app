@@ -36,8 +36,13 @@ export class AuthService {
   logoutCurrentUser(): void {
     this.authToken = null;
     this.user = null;
-    //localStorage.clear(); // hmmm..., this clear() method seems a bit too risky for my liking.
     localStorage.removeItem("id_token");
     localStorage.removeItem("user");
+
+    /* localStorage object is domian-specific:
+      -> the method: localStorage.clear(); 
+     Is also fine to use, but as the name goes "clear()" all! ...
+     so when you want full "control" of the key/value pairs in the localStorage object... removeItem() is WAY!
+    */
   }
 }
