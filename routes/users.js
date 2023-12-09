@@ -56,6 +56,7 @@ router.post("/authenticate", (req, res, next) => {
             name: user.name,
             email: user.email,
           },
+          msg: "You are now logged in"
         });
       } else {
         res.json({ success: false, msg: "wrong password" });
