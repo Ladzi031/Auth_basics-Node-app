@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../model/user';
 import { Observable } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 //import { map } from 'rxjs/operators/';
 //import { Data } from '../model/Data';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,10 @@ export class AuthService {
   authToken: any;
   user: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private jwtHelper: JwtHelperService
+  ) { }
 
   registerUser(user: User): Observable<any> {
     let headers = new HttpHeaders();
@@ -28,9 +33,10 @@ export class AuthService {
   getProfile(): Observable<any> {
     // get data from a protected endpoint...
     this.loadToken();
-    let headers = new HttpHeaders();
-    headers = headers.append('Authorization', this.authToken);
-    headers = headers.append('Content-Type', 'application/json');
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.authToken
+    });
     return this.http.get<any>("http://www.localhost:3000/users/profile", { headers: headers });
 
     /*
@@ -46,6 +52,7 @@ export class AuthService {
     this.user = user;
 
   }
+
   logoutCurrentUser(): void {
     this.authToken = null;
     this.user = null;
@@ -59,8 +66,12 @@ export class AuthService {
     */
   }
 
+  isTokenExpired(): boolean | Promise<boolean> {
+    return this.jwtHelper.isTokenExpired(this.authToken);
+  }
   private loadToken() {
     const token: string | null = localStorage.getItem("id_token");
     this.authToken = token;
   }
+
 }

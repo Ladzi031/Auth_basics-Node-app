@@ -9,7 +9,7 @@ import { Notify } from 'notiflix';
 })
 export class NavBarComponent {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(protected authService: AuthService, private router: Router) { }
 
 
   onLogoutClick(): boolean {

@@ -1,10 +1,7 @@
-<div *ngIf="user; else somethingWentWrong">
+<div *ngIf="user">
   <h2 class="page-header">{{ user.user.name }}</h2>
   <ul class="list-group">
     <li class="list-group-item">name: {{ user.user.name }}</li>
     <li class="list-group-item">Email: {{ user.user.email }}</li>
   </ul>
 </div>
-<ng-template #somethingWentWrong>
-    <p class="page-header">something went wrong!</p>
-</ng-template>
