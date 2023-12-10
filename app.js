@@ -18,7 +18,7 @@ mongoose.connection.on("connected", () => {
 });
 
 // port Number
-const PORT = 3000;
+const PORT = process.env.PORT || 8080; //readying for heroku deployment
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -44,7 +44,9 @@ app.use("/users", users);
 app.get("/", (req, res) => {
   res.send("hello world");
 });
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public/index.html"));
+});
 // Start Server...
 app.listen(PORT, () => {
   console.log("Server started on port: " + PORT);

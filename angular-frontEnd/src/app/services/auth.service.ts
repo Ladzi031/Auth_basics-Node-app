@@ -22,13 +22,13 @@ export class AuthService {
   registerUser(user: User): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    return this.http.post<any>("http://www.localhost:3000/users/register", user, { headers: headers });
+    return this.http.post<any>("users/register", user, { headers: headers });
   }
 
   authenticateUser(user: any): Observable<any> {
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'application/json');
-    return this.http.post<any>("http://www.localhost:3000/users/authenticate", user, { headers: headers });
+    return this.http.post<any>("users/authenticate", user, { headers: headers });
   }
   getProfile(): Observable<any> {
     // get data from a protected endpoint...
@@ -37,7 +37,7 @@ export class AuthService {
       'Content-Type': 'application/json',
       'Authorization': this.authToken
     });
-    return this.http.get<any>("http://www.localhost:3000/users/profile", { headers: headers });
+    return this.http.get<any>("users/profile", { headers: headers });
 
     /*
     Note to Self:
@@ -45,7 +45,7 @@ export class AuthService {
      */
   }
 
-  storeUserData(token: string, user: any) : void {
+  storeUserData(token: string, user: any): void {
     localStorage.setItem("id_token", token);
     localStorage.setItem("user", JSON.stringify(user)); // local_storage can only store strings.
     this.authToken = token;
@@ -69,10 +69,9 @@ export class AuthService {
   isTokenExpired(): boolean | Promise<boolean> {
     return this.jwtHelper.isTokenExpired(this.authToken);
   }
-  private loadToken() : void {
+  private loadToken(): void {
     const token: string | null = localStorage.getItem("id_token");
     this.authToken = token;
   }
 
 }
- 
