@@ -45,7 +45,7 @@ export class AuthService {
      */
   }
 
-  storeUserData(token: string, user: any) {
+  storeUserData(token: string, user: any) : void {
     localStorage.setItem("id_token", token);
     localStorage.setItem("user", JSON.stringify(user)); // local_storage can only store strings.
     this.authToken = token;
@@ -69,9 +69,10 @@ export class AuthService {
   isTokenExpired(): boolean | Promise<boolean> {
     return this.jwtHelper.isTokenExpired(this.authToken);
   }
-  private loadToken() {
+  private loadToken() : void {
     const token: string | null = localStorage.getItem("id_token");
     this.authToken = token;
   }
 
 }
+ 
