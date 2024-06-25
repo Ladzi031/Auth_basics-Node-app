@@ -1,8 +1,9 @@
 
 Learning the Basics of Node and route protection /authentication
-with popular NodeJs tools (passport.js, webtoken ...)
+with popular NodeJs tools:   
+(passport.js, webtoken ...)
 
-#some of the tools learned here are:
+#some of the tools learned along the way are:
 1. Mongoose
 2. MongoDB
 3. cors
